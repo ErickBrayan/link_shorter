@@ -1,0 +1,13 @@
+<h1>URL Shortener</h1>
+
+<input [(ngModel)]="originalUrl" type="url" placeholder="Enter URL to shorten">
+<button (click)="generateShortenUrl()">Shorten URL</button>
+
+<hr>
+
+<li>id: {{ responseData.id }}</li>
+<li>url: {{ responseData.url }}</li>
+<li>shortCode: {{ responseData.shortCode }}</li>
+<li>createdAt: {{ responseData.createdAt }}</li>
+<li>updatedAt: {{ responseData.updatedAt }}</li>
+<a href="{{linkResult}}">{{linkResult}}</a>
