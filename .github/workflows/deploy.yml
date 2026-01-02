@@ -1,34 +1,43 @@
-name: Deploy static content to GitHub Pages
+name: Deploy my-app
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.2.5
+          bun-version: latest
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
       - name: Build project
         run: bun run build
-      - name: Artifact upload
-        uses: actions/upload-artifact@v3
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
-          path: /dist/link_shorter/browser
-deploy:
-  needs: build
-  permissions:
-    pages: write
-    id-token: write
-  runs-on: ubuntu-latest
-  steps:
-    - name: deploy to GitHub pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+          path: dist/link_shorter/browser
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
