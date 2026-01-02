@@ -37,4 +37,9 @@ export class Shorten {
 
   }
 
+  copyToClipboard(url: string) {
+    navigator.clipboard.writeText(url);
+    alert('¡Enlace copiado!');
+  }
+
 }
