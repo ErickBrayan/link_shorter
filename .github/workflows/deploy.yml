@@ -22,8 +22,8 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          sed "VAR_API_KEY=${{ secrets.MY_API_KEY }}" >> $GITHUB_ENV
-          sed "VAR_BASE_URL=${{ secrets.MY_URL_BASE }}" >> $GITHUB_ENV  
+          sed -i "s|VAR_API_KEY|${{ secrets.MY_API_KEY }}|g" src/environments/environment.ts
+          sed -i "s|VAR_BASE_URL|${{ secrets.MY_URL_BASE }}|g" src/environments/environment.ts 
 
       - name: Build project
         run: bun run build
